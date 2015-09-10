@@ -45,7 +45,7 @@ class ClientesDb(object):
 		if self.Id == '':
 			self.__IncluirNovo()
 		else:
-			self.__Alterar()
+			self.__Alterar(pId, pCPF, pNome, pLogradouro, pNumero, pBairro, pCidade, pUF)
 
 	def __IncluirNovo(self):
 		'''Inclui novo cliente no banco'''
@@ -62,9 +62,18 @@ class ClientesDb(object):
 		self.banco.cursor.execute(sql)
 		self.banco.conn.commit()
 
-	def __Alterar(self, pId):
+	def __Alterar(self, pId, pCPF, pNome, pLogradouro, pNumero, pBairro, pCidade, pUF):
 		'''Alterar um cliente existente no banco'''
-		pass
+		
+		#montando o sql de update na tabela clientes
+		sql = 'UPDATE clientes SET Nome = "%s", Logradouro = "%s", Numero = "%i", Bairro = "%s", Cidade = "%s", UF = "%s")\
+									WHERE id = "%i"' %(pNome,
+											   pLogradouro,
+											   pNumero,
+											   pBairro,
+											   pCidade,
+											   pUF,
+											   pId)
 
 	def Excluir(self, pId):
 		'''Recebe um id e exclui o registro do banco caso ele exista'''
