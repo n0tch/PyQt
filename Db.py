@@ -64,7 +64,14 @@ class ClientesDb(object):
 
 	def __Alterar(self, pId):
 		'''Alterar um cliente existente no banco'''
-		pass
+		#montando o sql de update na tablea de clientes
+		sql = 'UPDATE cliente SET Nome = "%s", Logradouro = "%s", Numero = "%i", Bairro = "%s", Cidade = "%s", UF = "%s"\
+			WHERE id = "%i"' % (self.Nome, self.Logradouro, self.Numero, self.Bairro, self.Cidade, self.UF, self.Id)
+		try:
+			self.banco.cursor.execute(sql)
+			self.banco.conn.commit()
+		except Exception, e:
+			raise Exception('Não foi possivel atualizar o registo {}\nMenssagem original: {}'.format(self.Id, str(e)))
 
 	def Excluir(self, pId):
 		'''Recebe um id e exclui o registro do banco caso ele exista'''
